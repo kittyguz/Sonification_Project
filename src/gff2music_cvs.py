@@ -2,6 +2,7 @@ from BCBio import GFF
 import argparse
 import csv
 import os
+import re
 parser = argparse.ArgumentParser()
 parser.add_argument("--input_file", "-f", type=str, required=True)
 args = parser.parse_args()
@@ -18,7 +19,7 @@ key_rank = [60, 64, 67, 72, 76, 79, 48, 52, 55, 84, 88, 91, 36, 40, 43, 96, 100,
 #sort gene types to see which is the most frequent
 #use this info to assign notes to be played for each gene type
 gene_types, key_match = {}, {}
-with open(in_handle) as f1:
+with open(in_handle.name) as f1:
     lines = f1.readlines()
     for i, line in enumerate(lines):
         gt = re.search(r'gene_type=(.*?);', line)
