@@ -10,9 +10,9 @@ This project's goal is to make genome data into music.
 
 ## Setup
 * **clean_gff3.py**: Takes in a gff3 file and a number. Returns a file that contains only gene data that belongs to the specified chro number. Run by terminal command similar to the one below:
-```python3 clean_gff3.py -f human.gff3 -n 1```
+ * ```python3 clean_gff3.py -f human.gff3 -n 1```
 * **gff2music_cvs.py**: Takes in a gff3 file and converts it into a csv format that is convertible to midi via the ***csvmidi*** command. Run by terminal command similar to the one below:
-```python3 gff2music_cvs.py -f file.gff3```
+ *```python3 gff2music_cvs.py -f file.gff3```
 * The music of the newly built Midi file is then played using ***timidity***. 
   * To download the library on mac: brew install timidity
   * To run: timidity file.midi
