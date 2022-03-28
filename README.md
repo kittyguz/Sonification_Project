@@ -20,9 +20,5 @@ python3 clean_gff3.py -f human.gff3 -n 1
 python3 gff2music_cvs.py -f file.gff3
 ```
 * To play music of the newly built Midi file, use ***timidity***. 
-  * To download the library on mac: 
-
-  * ```brew install timidity```
-  * To run: 
-
-  * ```timidity file.midi```
+  * To download the library on mac: ```brew install timidity```
+  * To run: ```timidity file.midi```
