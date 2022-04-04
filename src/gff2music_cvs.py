@@ -13,11 +13,19 @@ in_file = os.path.join(input_dir, input_file)
 output_name = input_file.split('/')[-1].split('.')[0]+'.csv'
 
 in_handle = open(in_file)
+
+''' key_rank is a list of chosen keys that can be picked to be played. 
+    The list contains all octaves of C, E, G, D, F#, and A on a piano 
+    keyboard. The list is ordered by listing all CEG then DF#A octaves 
+    from the middle C outwards.The different notes are played for 
+    different gene type. The gene type that appears the most frequent 
+    will get the highest ranked(towards the front of the list) note 
+    from the key_rank list.'''
 key_rank = [60, 64, 67, 72, 76, 79, 48, 52, 55, 84, 88, 91, 36, 40, 43, 96, 100, 103, 24, 28, 31, 
 62, 66, 69, 74, 78, 81, 50, 54, 57, 86, 90, 93, 38, 42, 45, 98, 102, 105, 26, 30, 33]
 
-#sort gene types to see which is the most frequent
-#use this info to assign notes to be played for each gene type
+''' sort gene types to see which is the most frequent
+    use this info to assign notes to be played for each gene type '''
 gene_types, key_match = {}, {}
 with open(in_handle.name) as f1:
     lines = f1.readlines()
