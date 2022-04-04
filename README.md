@@ -9,12 +9,12 @@ This project's goal is to make genome data into music.
 * We will experiment to see if this tool improves the experience and efficiency of people who works with genome analysis.
 
 ## Setup
-* **clean_gff3.py**: Takes in a gff3 file and a number. Returns a file that contains only gene data that belongs to the specified chro number. Run by terminal command similar to the one below:
+* **clean_gff3.py**: Takes in a gff3 file[-f] and three numbers(chromosome number[-n], start position[-s], end position[-e]). Returns a file that contains only gene data that belongs to the specified chro number and within the specified range. The start and end position arguemments are optional. Run by terminal command similar to the one below:
 
 ```
-python3 clean_gff3.py -f human.gff3 -n 1
+python3 clean_gff3.py -f human_cleaned.gff3 -n 1 -s 0 -e 157724180
 ```
-* **gff2music_cvs.py**: Takes in a gff3 file and converts it into a csv format that is convertible to midi via the ***csvmidi*** command. Run by terminal command similar to the one below:
+* **gff2music_cvs.py**: Takes in a gff3 file and converts it into a csv format that is convertible to midi via the [***csvmidi***](https://www.fourmilab.ch/webtools/midicsv/) command. Run by terminal command similar to the one below:
 
 ```
 python3 gff2music_cvs.py -f file.gff3
