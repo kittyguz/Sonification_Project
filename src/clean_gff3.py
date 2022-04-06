@@ -14,7 +14,7 @@ end = args.end     #end position of user's desired translating region
 chro_num = args.chro_num
 input_dir = os.path.dirname(os.path.abspath(input_gff3))
 in_file = os.path.join(input_dir, input_gff3)
-output_txt = input_gff3.split('/')[-1].split('.')[0]+'_cleaned.gff3'
+output_txt = input_gff3.split('/')[-1].split('.')[0]+"_chro"+chro_num+'_cleaned.gff3'
 
 search_chro = "chr"+chro_num+"$"
 with open(input_gff3) as f1:
