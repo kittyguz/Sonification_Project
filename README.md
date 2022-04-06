@@ -18,6 +18,7 @@ python3 clean_gff3.py -f human_cleaned.gff3 -n 1 -s 0 -e 157724180
 
 ```
 python3 gff2music_cvs.py -f file.gff3
+csvmidi file.csv file.midi
 ```
 * To play music of the newly built Midi file, use ***timidity***. 
   * To download the library on mac: ```brew install timidity```
