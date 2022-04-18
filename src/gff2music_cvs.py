@@ -3,6 +3,7 @@ import argparse
 import csv
 import os
 import re
+import pickle
 parser = argparse.ArgumentParser()
 parser.add_argument("--input_file", "-f", type=str, required=True)
 args = parser.parse_args()
@@ -14,30 +15,12 @@ output_name = input_file.split('/')[-1].split('.')[0]+'.csv'
 
 in_handle = open(in_file)
 
-''' key_rank is a list of chosen keys that can be picked to be played. 
-    The list contains all octaves of C, E, G, D, F#, and A on a piano 
-    keyboard. The list is ordered by listing all CEG then DF#A octaves 
-    from the middle C outwards.The different notes are played for 
-    different gene type. The gene type that appears the most frequent 
-    will get the highest ranked(towards the front of the list) note 
-    from the key_rank list.'''
-key_rank = [60, 64, 67, 72, 76, 79, 48, 52, 55, 84, 88, 91, 36, 40, 43, 96, 100, 103, 24, 28, 31, 
-62, 66, 69, 74, 78, 81, 50, 54, 57, 86, 90, 93, 38, 42, 45, 98, 102, 105, 26, 30, 33]
-
-''' sort gene types to see which is the most frequent
-    use this info to assign notes to be played for each gene type '''
-gene_types, key_match = {}, {}
-with open(in_handle.name) as f1:
-    lines = f1.readlines()
-    for i, line in enumerate(lines):
-        gt = re.search(r'gene_type=(.*?);', line)
-        if (gt is not None) and (gt.group(1) not in gene_types.keys()):
-            gene_types[gt.group(1)]=1
-        elif (gt is not None) and (gt.group(1) in gene_types.keys()):
-            gene_types[gt.group(1)]+=1
-gene_types = sorted(gene_types.items(), key=lambda x: x[1], reverse=True)
-for i in range(len(gene_types)):
-	key_match[gene_types[i][0]] = key_rank[i]
+''' key_match is a dictionary that assigns notes to be played for each gene type.
+	Its key is gene type, and its value is an int that represents that gene type's 
+	assigned note in midi convention.'''
+a_file = open("key_assignment.pkl", "rb")
+key_match = pickle.load(a_file)
+a_file.close()
 
 data_csv = []
 for rec in GFF.parse(in_handle):
