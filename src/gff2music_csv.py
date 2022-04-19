@@ -6,7 +6,7 @@ import re
 import pickle
 parser = argparse.ArgumentParser()
 parser.add_argument("--input_file", "-f", type=str, required=True)
-parser.add_argument("--speed_adj", "-s", default=1, type=int)
+parser.add_argument("--speed_adj", "-s", default=1, type=float)
 args = parser.parse_args()
 
 input_file = args.input_file

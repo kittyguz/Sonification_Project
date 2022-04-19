@@ -25,12 +25,12 @@ with open(input_gff3) as f1:
             line_list = line.split()
             is_desired_data = re.match(search_chro, line_list[0]) and bool(re.match("gene", line_list[2]))
             
-            if end >= 0: 
+            if len(line_list)>4 and line_list[3].isdigit() and line_list[4].isdigit() and end >= 0: 
                 if start >= 0:
                     within_range = (int(line_list[3]) >= start) and (int(line_list[4]) <= end)
                 else:
                     within_range = int(line_list[4]) <= end
-            elif start >= 0:
+            elif len(line_list)>4 and line_list[3].isdigit() and start >= 0:
                 within_range = int(line_list[3]) >= start
             else:
                 within_range = True
