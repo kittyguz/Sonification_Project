@@ -14,10 +14,10 @@ This project's goal is to make genome data into music.
 ```
 python3 clean_gff3.py -f human_cleaned.gff3 -n 1 -s 0 -e 157724180
 ```
-* **gff2music_cvs.py**: Takes in a gff3 file and converts it into a csv format that is convertible to midi via the [***csvmidi***](https://www.fourmilab.ch/webtools/midicsv/) command. Run by terminal command similar to the one below:
+* **gff2music_csv.py**: Takes in a gff3 file and converts it into a csv format that is convertible to midi via the [***csvmidi***](https://www.fourmilab.ch/webtools/midicsv/) command. It also takes in an optional int that adjust the speed of the music by multiplying the current speed by the specified int. Run by terminal command similar to the one below:
 
 ```
-python3 gff2music_cvs.py -f file.gff3
+python3 gff2music_csv.py -f file.gff3 -s 3
 csvmidi file.csv file.midi
 ```
 * To play music of the newly built Midi file, use ***timidity***. 
