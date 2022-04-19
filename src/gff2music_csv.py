@@ -6,12 +6,14 @@ import re
 import pickle
 parser = argparse.ArgumentParser()
 parser.add_argument("--input_file", "-f", type=str, required=True)
+parser.add_argument("--speed_adj", "-s", default=1, type=int)
 args = parser.parse_args()
 
 input_file = args.input_file
 input_dir = os.path.dirname(os.path.abspath(input_file))
 in_file = os.path.join(input_dir, input_file)
-output_name = input_file.split('/')[-1].split('.')[0]+'.csv'
+speed_adj = args.speed_adj #adjusts the speed of the music by a multiple of speed_adj
+output_name = input_file.split('/')[-1].split('.')[0]+str(speed_adj)+'.csv'
 
 in_handle = open(in_file)
 
@@ -29,9 +31,11 @@ for rec in GFF.parse(in_handle):
 		f = rec.features[i].location
 		gt = rec.features[i].qualifiers['gene_type'][0]
 		csv_row_Note_on,csv_row_Note_off = {},{}
+		if i == 0:
+			offset = int(f.start)
 
 		csv_row_Note_on['Track'] = 2
-		csv_row_Note_on['Time'] = int(f.start)
+		csv_row_Note_on['Time'] = int(f.start) - offset
 		csv_row_Note_on['NOC'] = "Note_on_c"
 		csv_row_Note_on['Channel'] = 1
 		csv_row_Note_on['Note'] = key_match[gt]
@@ -39,7 +43,7 @@ for rec in GFF.parse(in_handle):
 		data_csv.append(csv_row_Note_on)
 
 		csv_row_Note_off['Track'] = 2
-		csv_row_Note_off['Time'] = int(f.end)
+		csv_row_Note_off['Time'] = int(f.end) - offset
 		csv_row_Note_off['NOC'] = "Note_off_c"
 		csv_row_Note_off['Channel'] = 1
 		csv_row_Note_off['Note'] = key_match[gt]
@@ -53,7 +57,9 @@ data_csv = sorted(data_csv, key=lambda item: item['Time'])
 end_time = data_csv[len(data_csv)-1]['Time']
 with open(csv_file, 'w', encoding='UTF8', newline='') as f:
 	fieldnames = ['Track', 'Time', 'NOC', 'Channel','Note','Velocity']
-	f.write("0, 0, Header, 1, 2, 10000\n2, 0, Start_track\n")
+	speed = 10000*speed_adj
+	head = "0, 0, Header, 1, 2, "+str(speed)+"\n2, 0, Start_track\n"
+	f.write(head)
 	writer = csv.DictWriter(f, fieldnames=fieldnames)
 	writer.writerows(data_csv)
 	f.write("2, {}, End_track\n0, 0, End_of_file".format(str(end_time)))
